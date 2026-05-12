@@ -1,1 +1,1 @@
-# Counth-Ephiphany
+# Count-Ephiphany
