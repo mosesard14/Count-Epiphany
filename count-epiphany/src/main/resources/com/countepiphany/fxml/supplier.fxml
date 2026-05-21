@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.SupplierController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Manajemen Supplier" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button,active" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <!-- Form Tambah/Update Supplier -->
+            <VBox styleClass="card" spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label fx:id="lblFormTitle" text="Tambah Supplier" styleClass="label-section"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="btnHapus" text="Hapus" styleClass="btn-icon"
+                            onAction="#handleHapus" visible="false"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="3">
+                        <Label text="ID Supplier" styleClass="label-muted"/>
+                        <TextField fx:id="txtIdSupplier" promptText="Kode unik" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Nama Supplier" styleClass="label-muted"/>
+                        <TextField fx:id="txtNamaSupplier" promptText="Nama perusahaan" prefWidth="200"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Alamat" styleClass="label-muted"/>
+                        <TextField fx:id="txtAlamat" promptText="Alamat lengkap" prefWidth="200"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Telepon" styleClass="label-muted"/>
+                        <TextField fx:id="txtTelepon" promptText="Nomor telepon" prefWidth="130"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Email" styleClass="label-muted"/>
+                        <TextField fx:id="txtEmail" promptText="Email" prefWidth="160"/>
+                    </VBox>
+                    <VBox alignment="BOTTOM_LEFT" spacing="4">
+                        <Button text="Simpan" styleClass="btn-success" onAction="#handleSimpan"/>
+                        <Button text="Batal"  styleClass="btn-secondary" onAction="#handleBatalForm"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Daftar Supplier -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="10">
+                <Label text="Daftar Supplier" styleClass="label-section"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="txtCariSupplier" promptText="Cari nama supplier..."
+                               prefWidth="280" onKeyReleased="#handleCari"/>
+                    <Button text="Cari"  styleClass="btn-primary"  onAction="#handleCari"/>
+                    <Button text="Reset" styleClass="btn-secondary" onAction="#handleReset"/>
+                </HBox>
+
+                <TableView fx:id="tblSupplier" VBox.vgrow="ALWAYS"
+                           onMouseClicked="#handlePilihBaris">
+                    <columns>
+                        <TableColumn fx:id="colId"      text="ID Supplier"   prefWidth="130"/>
+                        <TableColumn fx:id="colNama"    text="Nama Supplier" prefWidth="240"/>
+                        <TableColumn fx:id="colAlamat"  text="Alamat"        prefWidth="230"/>
+                        <TableColumn fx:id="colTelepon" text="Telepon"       prefWidth="140"/>
+                        <TableColumn fx:id="colEmail"   text="Email"         prefWidth="180"/>
+                        <TableColumn fx:id="colAksi"    text="Aksi"          prefWidth="150"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </VBox>
+    </HBox>
+</VBox>
