@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.LaporanController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Laporan" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button,active" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <!-- Hitung Pendapatan Card -->
+            <VBox styleClass="card" spacing="8">
+                <Label text="Hitung Pendapatan" styleClass="label-section"/>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Tanggal Mulai:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpPendapatanDari" prefWidth="150"/>
+                    <Label text="Tanggal Selesai:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpPendapatanSampai" prefWidth="150"/>
+                    <Button text="Hitung" styleClass="btn-primary" onAction="#handleHitungPendapatan"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Total Pendapatan" styleClass="label-muted"/>
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="Rp" style="-fx-font-weight:bold;-fx-font-size:14px;"/>
+                        <Label fx:id="lblTotalPendapatan" text="0,00"
+                               style="-fx-font-size:22px;-fx-font-weight:bold;-fx-text-fill:#6C63CF;"/>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <!-- Laporan Per Barang Card -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="10">
+                <Label text="Laporan Penjualan Per Barang" styleClass="label-section"/>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Dari:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpLaporanDari" prefWidth="150"/>
+                    <Label text="Sampai:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpLaporanSampai" prefWidth="150"/>
+                    <Button text="Tampilkan Laporan" styleClass="btn-primary" onAction="#handleTampilLaporan"/>
+                </HBox>
+
+                <TableView fx:id="tblLaporan" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colNo"           text="No"               prefWidth="50"/>
+                        <TableColumn fx:id="colKode"         text="Kode Barang"      prefWidth="110"/>
+                        <TableColumn fx:id="colKategori"     text="Kategori"         prefWidth="110"/>
+                        <TableColumn fx:id="colNama"         text="Nama Barang"      prefWidth="220"/>
+                        <TableColumn fx:id="colStok"         text="Stok"             prefWidth="70"/>
+                        <TableColumn fx:id="colTerjual"      text="Terjual"          prefWidth="80"/>
+                        <TableColumn fx:id="colHargaJual"    text="Harga Jual"       prefWidth="120"/>
+                        <TableColumn fx:id="colNominal"      text="Nominal Penjualan" prefWidth="140"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Export & Total Row -->
+            <HBox styleClass="card" spacing="16" alignment="CENTER_LEFT">
+                <Label text="Export Laporan" styleClass="label-section"/>
+                <Button text="Export PDF"   styleClass="btn-danger"   onAction="#handleExportPdf"/>
+                <Button text="Export Excel" styleClass="btn-success"  onAction="#handleExportExcel"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Total:" styleClass="label-section"/>
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="Rp" style="-fx-font-weight:bold;"/>
+                    <Label fx:id="lblTotalLaporan" text="0,00"
+                           style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#6C63CF;"/>
+                </HBox>
+            </HBox>
+
+        </VBox>
+    </HBox>
+</VBox>

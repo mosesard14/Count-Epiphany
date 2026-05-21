@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.RiwayatController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Riwayat Penjualan" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button,active" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <!-- Daftar Riwayat / Detail Transaksi (pakai StackPane untuk switch view) -->
+            <StackPane VBox.vgrow="ALWAYS">
+
+                <!-- View: Daftar Riwayat -->
+                <VBox fx:id="viewDaftar" styleClass="card" spacing="10">
+                    <Label text="Daftar Riwayat Transaksi" styleClass="label-section"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Dari:" styleClass="label-muted"/>
+                        <DatePicker fx:id="dpDari" prefWidth="150"/>
+                        <Label text="Sampai:" styleClass="label-muted"/>
+                        <DatePicker fx:id="dpSampai" prefWidth="150"/>
+                        <Button text="Filter" styleClass="btn-primary"  onAction="#handleFilter"/>
+                        <Button text="Semua"  styleClass="btn-secondary" onAction="#handleTampilSemua"/>
+                    </HBox>
+
+                    <TableView fx:id="tblRiwayat" VBox.vgrow="ALWAYS"
+                               onMouseClicked="#handlePilihTransaksi">
+                        <columns>
+                            <TableColumn fx:id="colNo"       text="No"           prefWidth="50"/>
+                            <TableColumn fx:id="colTanggal"  text="Tanggal"      prefWidth="120"/>
+                            <TableColumn fx:id="colWaktu"    text="Waktu"        prefWidth="90"/>
+                            <TableColumn fx:id="colId"       text="ID Transaksi" prefWidth="110"/>
+                            <TableColumn fx:id="colMetode"   text="Pembayaran"   prefWidth="110"/>
+                            <TableColumn fx:id="colDiskon"   text="Disc(%)"      prefWidth="80"/>
+                            <TableColumn fx:id="colTotal"    text="Total Harga"  prefWidth="130"/>
+                            <TableColumn fx:id="colAksi"     text="Aksi"         prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <!-- View: Detail Transaksi -->
+                <VBox fx:id="viewDetail" styleClass="card" spacing="10" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Button text="Kembali" styleClass="btn-secondary" onAction="#handleKembali"/>
+                        <Label text="Riwayat Daftar Belanja" styleClass="label-section"/>
+                    </HBox>
+
+                    <!-- Info header transaksi -->
+                    <HBox spacing="20" alignment="CENTER_LEFT"
+                          style="-fx-background-color:#F9F9FD;-fx-padding:8;-fx-background-radius:6;">
+                        <HBox spacing="6">
+                            <Label text="Tanggal" styleClass="label-muted"/>
+                            <Label fx:id="lblDetTanggal" style="-fx-font-weight:bold;"/>
+                        </HBox>
+                        <HBox spacing="6">
+                            <Label text="Waktu" styleClass="label-muted"/>
+                            <Label fx:id="lblDetWaktu" style="-fx-font-weight:bold;"/>
+                        </HBox>
+                        <HBox spacing="6">
+                            <Label text="ID Transaksi" styleClass="label-muted"/>
+                            <Label fx:id="lblDetId" style="-fx-font-weight:bold;"/>
+                        </HBox>
+                        <HBox spacing="6">
+                            <Label text="Total Harga" styleClass="label-muted"/>
+                            <Label fx:id="lblDetTotal" style="-fx-font-weight:bold;-fx-text-fill:#6C63CF;"/>
+                        </HBox>
+                    </HBox>
+
+                    <TableView fx:id="tblDetail" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colDetNo"       text="No"          prefWidth="50"/>
+                            <TableColumn fx:id="colDetKode"     text="Kode"        prefWidth="110"/>
+                            <TableColumn fx:id="colDetNama"     text="Nama Barang" prefWidth="250"/>
+                            <TableColumn fx:id="colDetHarga"    text="Harga"       prefWidth="120"/>
+                            <TableColumn fx:id="colDetQty"      text="QTY"         prefWidth="70"/>
+                            <TableColumn fx:id="colDetDiskon"   text="Disc(%)"     prefWidth="80"/>
+                            <TableColumn fx:id="colDetSubtotal" text="Sub Total"   prefWidth="130"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox alignment="CENTER_RIGHT" spacing="12">
+                        <Label text="Total:" styleClass="label-section"/>
+                        <Label fx:id="lblDetTotalBawah"
+                               style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#6C63CF;"/>
+                    </HBox>
+                </VBox>
+
+            </StackPane>
+        </VBox>
+    </HBox>
+</VBox>
