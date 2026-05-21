@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.PembelianController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Manajemen Pembelian" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button,active" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <!-- Form Tambah Pembelian -->
+            <VBox styleClass="card" spacing="10">
+                <Label text="Catat Pembelian Barang (Restock)" styleClass="label-section"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="3">
+                        <Label text="Supplier" styleClass="label-muted"/>
+                        <ComboBox fx:id="cmbSupplier" promptText="Pilih supplier" prefWidth="200"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Barang" styleClass="label-muted"/>
+                        <ComboBox fx:id="cmbBarang" promptText="Pilih barang" prefWidth="220"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Jumlah Beli" styleClass="label-muted"/>
+                        <TextField fx:id="txtJumlahBeli" promptText="0" prefWidth="90"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Harga Beli Satuan" styleClass="label-muted"/>
+                        <TextField fx:id="txtHargaBeliSatuan" promptText="0" prefWidth="130"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Total Modal" styleClass="label-muted"/>
+                        <Label fx:id="lblTotalModal" text="Rp 0,00"
+                               style="-fx-font-weight:bold;-fx-font-size:14px;-fx-text-fill:#6C63CF;"/>
+                    </VBox>
+                    <VBox alignment="BOTTOM_LEFT" spacing="4">
+                        <Button text="Simpan Pembelian" styleClass="btn-success" onAction="#handleSimpanPembelian"/>
+                        <Button text="Batal" styleClass="btn-secondary" onAction="#handleBatal"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Riwayat Pembelian -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="10">
+                <Label text="Riwayat Pembelian Barang" styleClass="label-section"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Dari:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpDari" prefWidth="140"/>
+                    <Label text="Sampai:" styleClass="label-muted"/>
+                    <DatePicker fx:id="dpSampai" prefWidth="140"/>
+                    <Button text="Filter" styleClass="btn-primary" onAction="#handleFilter"/>
+                    <Button text="Semua"  styleClass="btn-secondary" onAction="#handleTampilSemua"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Total Modal: " styleClass="label-muted"/>
+                    <Label fx:id="lblTotalModalPeriode" text="Rp 0,00"
+                           style="-fx-font-weight:bold;-fx-text-fill:#6C63CF;"/>
+                </HBox>
+
+                <TableView fx:id="tblPembelian" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId"        text="ID"             prefWidth="60"/>
+                        <TableColumn fx:id="colTanggal"   text="Tanggal"        prefWidth="140"/>
+                        <TableColumn fx:id="colSupplier"  text="Supplier"       prefWidth="180"/>
+                        <TableColumn fx:id="colBarang"    text="Barang"         prefWidth="200"/>
+                        <TableColumn fx:id="colJumlah"    text="Jumlah"         prefWidth="80"/>
+                        <TableColumn fx:id="colHargaSat"  text="Harga/Satuan"   prefWidth="120"/>
+                        <TableColumn fx:id="colTotal"     text="Total Modal"    prefWidth="130"/>
+                        <TableColumn fx:id="colKasir"     text="Kasir"          prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </VBox>
+    </HBox>
+</VBox>
