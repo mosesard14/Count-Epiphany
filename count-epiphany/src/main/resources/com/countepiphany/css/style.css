@@ -1,0 +1,346 @@
+/* ============================================================
+   Count Epiphany — Global Stylesheet
+   Warna utama: #6C63CF (purple), #F5F5F5 (background)
+   ============================================================ */
+
+/* ── Root & Global ────────────────────────────────────────── */
+.root {
+    -fx-font-family: "Segoe UI", "Inter", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #F5F5F5;
+}
+
+/* ── Warna Utama ──────────────────────────────────────────── */
+* {
+    -color-primary:       #6C63CF;
+    -color-primary-dark:  #554DAA;
+    -color-primary-light: #9D97DC;
+    -color-danger:        #E53935;
+    -color-success:       #43A047;
+    -color-warning:       #FB8C00;
+    -color-bg:            #F5F5F5;
+    -color-surface:       #FFFFFF;
+    -color-sidebar:       #EDEDF7;
+    -color-text:          #2D2D2D;
+    -color-text-muted:    #7B7B9B;
+    -color-border:        #DCDCEF;
+}
+
+/* ── Header Bar ───────────────────────────────────────────── */
+.header-bar {
+    -fx-background-color: #6C63CF;
+    -fx-padding: 16 24 16 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2);
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.header-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.80);
+    -fx-font-size: 12px;
+}
+
+.header-tagline {
+    -fx-text-fill: rgba(255,255,255,0.75);
+    -fx-font-size: 11px;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.sidebar {
+    -fx-background-color: #EDEDF7;
+    -fx-padding: 16 12 16 12;
+    -fx-pref-width: 170px;
+    -fx-min-width: 150px;
+    -fx-spacing: 6;
+}
+
+.nav-button {
+    -fx-background-color: #9D97DC;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 140px;
+    -fx-pref-height: 34px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+    -fx-padding: 0 12 0 12;
+}
+
+.nav-button:hover {
+    -fx-background-color: #6C63CF;
+}
+
+.nav-button.active {
+    -fx-background-color: #6C63CF;
+}
+
+.btn-logout {
+    -fx-background-color: #E53935;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 140px;
+    -fx-pref-height: 34px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.btn-logout:hover {
+    -fx-background-color: #C62828;
+}
+
+/* ── Card / Panel ─────────────────────────────────────────── */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
+}
+
+/* ── Tombol Utama ─────────────────────────────────────────── */
+.btn-primary {
+    -fx-background-color: #6C63CF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 34px;
+    -fx-padding: 0 16 0 16;
+}
+.btn-primary:hover   { -fx-background-color: #554DAA; }
+.btn-primary:pressed { -fx-background-color: #4A4399; }
+
+.btn-success {
+    -fx-background-color: #43A047;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 36px;
+    -fx-padding: 0 20 0 20;
+}
+.btn-success:hover { -fx-background-color: #388E3C; }
+
+.btn-danger {
+    -fx-background-color: #E53935;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 34px;
+    -fx-padding: 0 16 0 16;
+}
+.btn-danger:hover { -fx-background-color: #C62828; }
+
+.btn-warning {
+    -fx-background-color: #FB8C00;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 34px;
+    -fx-padding: 0 16 0 16;
+}
+.btn-warning:hover { -fx-background-color: #E65100; }
+
+.btn-secondary {
+    -fx-background-color: #9E9E9E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-height: 34px;
+    -fx-padding: 0 16 0 16;
+}
+.btn-secondary:hover { -fx-background-color: #757575; }
+
+.btn-icon {
+    -fx-background-color: #E53935;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+}
+
+.btn-add-icon {
+    -fx-background-color: #6C63CF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-pref-width: 34px;
+    -fx-pref-height: 34px;
+}
+
+/* ── TextField & Input ───────────────────────────────────── */
+.text-field, .password-field, .combo-box, .date-picker {
+    -fx-background-color: #F0F0F8;
+    -fx-border-color: #DCDCEF;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 6 10 6 10;
+    -fx-pref-height: 34px;
+}
+
+.text-field:focused, .password-field:focused,
+.combo-box:focused, .date-picker:focused {
+    -fx-border-color: #6C63CF;
+    -fx-background-color: white;
+}
+
+/* ── Label ───────────────────────────────────────────────── */
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6C63CF;
+}
+
+.label-section {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D2D2D;
+}
+
+.label-muted {
+    -fx-text-fill: #7B7B9B;
+    -fx-font-size: 11px;
+}
+
+.label-total-value {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D2D2D;
+}
+
+.label-kembalian {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #43A047;
+}
+
+.label-warning {
+    -fx-text-fill: #FB8C00;
+    -fx-font-weight: bold;
+}
+
+/* ── TableView ───────────────────────────────────────────── */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #DCDCEF;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #6C63CF;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #F9F9FD;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #E8E6F8;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: #2D2D2D;
+    -fx-font-weight: normal;
+}
+
+.table-row-cell .table-cell {
+    -fx-text-fill: #2D2D2D;
+    -fx-border-color: transparent transparent #DCDCEF transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #EEEEF9;
+}
+
+/* ── Login Page ──────────────────────────────────────────── */
+.login-container {
+    -fx-background-color: #F5F5F5;
+}
+
+.login-card {
+    -fx-background-color: #EDEDF7;
+    -fx-background-radius: 16px;
+    -fx-padding: 40 36 40 36;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 4);
+    -fx-min-width: 340px;
+    -fx-max-width: 340px;
+}
+
+.login-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6C63CF;
+    -fx-font-style: italic;
+}
+
+/* ── Separator ───────────────────────────────────────────── */
+.separator { -fx-background-color: #DCDCEF; }
+
+/* ── ScrollPane ──────────────────────────────────────────── */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+
+/* ── Toggle Button (Cashless) ────────────────────────────── */
+.toggle-button {
+    -fx-background-color: #DCDCEF;
+    -fx-background-radius: 20px;
+    -fx-text-fill: #7B7B9B;
+    -fx-font-size: 11px;
+    -fx-pref-height: 24px;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #6C63CF;
+    -fx-text-fill: white;
+}
+
+/* ── Notifikasi Stok Rendah ──────────────────────────────── */
+.stok-rendah-row {
+    -fx-background-color: #FFF3E0;
+}
+
+/* ── Struk Preview Area ──────────────────────────────────── */
+.struk-area {
+    -fx-background-color: white;
+    -fx-border-color: #DCDCEF;
+    -fx-border-radius: 6px;
+    -fx-padding: 12;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 12px;
+}

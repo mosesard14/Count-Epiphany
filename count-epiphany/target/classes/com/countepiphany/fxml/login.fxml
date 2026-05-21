@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.LoginController"
+      styleClass="login-container"
+      prefWidth="1024" prefHeight="680">
+
+    <!-- ── Header Bar ─────────────────────────────────── -->
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style: italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style: italic; -fx-font-size: 18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Manajemen Sistem Kasir" styleClass="header-tagline"/>
+    </HBox>
+
+    <!-- ── Content: Login Card centered ──────────────── -->
+    <StackPane VBox.vgrow="ALWAYS">
+        <VBox styleClass="login-card" alignment="TOP_CENTER" spacing="16"
+              StackPane.alignment="CENTER">
+
+            <Label text="Masuk" styleClass="login-title"/>
+
+            <VBox spacing="4" prefWidth="240">
+                <Label text="username" styleClass="label-muted"/>
+                <TextField fx:id="txtUsername" promptText="Masukkan username"
+                           styleClass="text-field" prefWidth="240"/>
+            </VBox>
+
+            <VBox spacing="4" prefWidth="240">
+                <Label text="password" styleClass="label-muted"/>
+                <PasswordField fx:id="txtPassword" promptText="Masukkan password"
+                               styleClass="password-field" prefWidth="240"/>
+            </VBox>
+
+            <Label fx:id="lblError" text="" styleClass="label-warning"
+                   wrapText="true" prefWidth="240" textAlignment="CENTER"/>
+
+            <Button fx:id="btnMasuk" text="Masuk"
+                    styleClass="btn-primary"
+                    prefWidth="240" prefHeight="38"
+                    style="-fx-font-size: 14px; -fx-font-style: italic;"
+                    onAction="#handleLogin"/>
+
+        </VBox>
+    </StackPane>
+</VBox>

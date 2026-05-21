@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.TransaksiController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Transaksi Penjualan" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <HBox spacing="12">
+                <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="8">
+                    <Label text="Tambah Barang" styleClass="label-section"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <VBox spacing="2">
+                            <Label text="Kode Barang" styleClass="label-muted"/>
+                            <TextField fx:id="txtKodeBarang" promptText="Kode barang" prefWidth="150"/>
+                        </VBox>
+                        <VBox spacing="2">
+                            <Label text="Nama Barang" styleClass="label-muted"/>
+                            <TextField fx:id="txtNamaBarangCari" promptText="Nama barang" prefWidth="200"/>
+                        </VBox>
+                        <VBox spacing="2">
+                            <Label text="Jumlah" styleClass="label-muted"/>
+                            <TextField fx:id="txtJumlah" promptText="1" prefWidth="70"/>
+                        </VBox>
+                        <VBox alignment="BOTTOM_LEFT">
+                            <Button text="+" styleClass="btn-add-icon" onAction="#handleTambahBarang"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <VBox styleClass="card" minWidth="180" alignment="CENTER_LEFT" spacing="4">
+                    <Label text="Total" styleClass="label-section"/>
+                    <HBox alignment="CENTER_LEFT" spacing="6">
+                        <Label text="Rp" style="-fx-font-size:14px;-fx-font-weight:bold;"/>
+                        <Label fx:id="lblTotal" text="0,00" styleClass="label-total-value"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="8">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Daftar Belanja" styleClass="label-section"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Hapus Semua" styleClass="btn-danger" style="-fx-font-size:11px;" onAction="#handleHapusSemua"/>
+                </HBox>
+                <TableView fx:id="tblKeranjang" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colNo"       text="No"          prefWidth="45"/>
+                        <TableColumn fx:id="colKode"     text="Kode"        prefWidth="100"/>
+                        <TableColumn fx:id="colNama"     text="Nama Barang" prefWidth="240"/>
+                        <TableColumn fx:id="colHarga"    text="Harga"       prefWidth="110"/>
+                        <TableColumn fx:id="colQty"      text="QTY"         prefWidth="60"/>
+                        <TableColumn fx:id="colDiskon"   text="Disc(%)"     prefWidth="75"/>
+                        <TableColumn fx:id="colSubtotal" text="Sub Total"   prefWidth="120"/>
+                        <TableColumn fx:id="colAksi"     text=""            prefWidth="110"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <HBox spacing="12">
+                <VBox styleClass="card" spacing="8" prefWidth="210">
+                    <Label text="Diskon" styleClass="label-section"/>
+                    <Label text="Persentase Diskon" styleClass="label-muted"/>
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <TextField fx:id="txtDiskon" promptText="0" prefWidth="80"/>
+
+                    </HBox>
+                    <Button text="Terapkan" styleClass="btn-secondary" onAction="#handleTerapkanDiskon"/>
+                </VBox>
+
+                <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10">
+                    <Label text="Hitung Kembalian" styleClass="label-section"/>
+                    <GridPane hgap="16" vgap="8">
+                        <Label text="Cashless" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <ToggleButton fx:id="toggleCashless" text="OFF"
+                                      GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                      onAction="#handleToggleCashless"/>
+                        <Label text="Nominal Bayar" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="4" alignment="CENTER_LEFT">
+                            <Label text="Rp" style="-fx-font-weight:bold;"/>
+                            <TextField fx:id="txtNominalBayar" promptText="0" prefWidth="160" onKeyReleased="#hitungKembalianRealtime"/>
+                        </HBox>
+                        <Label text="Kembalian" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label fx:id="lblKembalian" text="Rp 0,00" styleClass="label-kembalian" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    </GridPane>
+                </VBox>
+
+                <VBox styleClass="card" spacing="10" prefWidth="210" alignment="TOP_CENTER">
+                    <Label text="Bayar dan Cetak Struk" styleClass="label-section"/>
+                    <Button fx:id="btnBayar" text="Bayar" styleClass="btn-success"
+                            prefWidth="180" prefHeight="44"
+                            style="-fx-font-size:15px;"
+                            onAction="#handleBayar"/>
+                    <Button text="Batalkan Transaksi" styleClass="btn-danger"
+                            prefWidth="180" onAction="#handleBatalkan"/>
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </HBox>
+</VBox>

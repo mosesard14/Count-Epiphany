@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.InventoriController"
+      prefWidth="1100" prefHeight="720">
+
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count" styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title" style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Manajemen Inventori" styleClass="header-tagline"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
+            <Button text="Transaksi" styleClass="nav-button" onAction="#gotoTransaksi"/>
+            <Button text="Inventori" styleClass="nav-button,active" onAction="#gotoInventori"/>
+            <Button text="Supplier"  styleClass="nav-button" onAction="#gotoSupplier"/>
+            <Button text="Laporan"   styleClass="nav-button" onAction="#gotoLaporan"/>
+            <Button text="Riwayat"   styleClass="nav-button" onAction="#gotoRiwayat"/>
+            <Button text="Pembelian" styleClass="nav-button" onAction="#gotoPembelian"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Log-Out" styleClass="btn-logout" onAction="#handleLogout"/>
+        </VBox>
+
+        <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
+
+            <!-- Form Tambah / Update Barang -->
+            <VBox styleClass="card" spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label fx:id="lblFormTitle" text="Tambah Barang Baru" styleClass="label-section"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Hapus" styleClass="btn-icon" onAction="#handleHapus" fx:id="btnHapus"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="3">
+                        <Label text="Kode Barang" styleClass="label-muted"/>
+                        <TextField fx:id="txtIdBarang" promptText="Kode/Barcode" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Nama Barang" styleClass="label-muted"/>
+                        <TextField fx:id="txtNamaBarang" promptText="Nama barang" prefWidth="200"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Harga Beli" styleClass="label-muted"/>
+                        <TextField fx:id="txtHargaBeli" promptText="0" prefWidth="110"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Harga Jual" styleClass="label-muted"/>
+                        <TextField fx:id="txtHargaJual" promptText="0" prefWidth="110"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Kategori" styleClass="label-muted"/>
+                        <TextField fx:id="txtKategori" promptText="Kategori" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="ID Supplier" styleClass="label-muted"/>
+                        <ComboBox fx:id="cmbSupplier" promptText="Pilih supplier" prefWidth="140"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Stok Min." styleClass="label-muted"/>
+                        <TextField fx:id="txtStokMin" promptText="5" prefWidth="70"/>
+                    </VBox>
+                    <VBox alignment="BOTTOM_LEFT" spacing="4">
+                        <Button text="Simpan" styleClass="btn-success" onAction="#handleSimpan"/>
+                        <Button text="Batal"  styleClass="btn-secondary" onAction="#handleBatalForm"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Daftar Barang -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="10">
+                <Label text="Daftar Barang" styleClass="label-section"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="txtCariBarang" promptText="Cari kode atau nama barang..."
+                               prefWidth="260" onKeyReleased="#handleCari"/>
+                    <Label text="Kategori:" styleClass="label-muted"/>
+                    <ComboBox fx:id="cmbFilterKategori" promptText="Semua" prefWidth="140"
+                              onAction="#handleFilter"/>
+                    <Label text="Stok:" styleClass="label-muted"/>
+                    <ComboBox fx:id="cmbFilterStok" promptText="Semua" prefWidth="110"
+                              onAction="#handleFilter"/>
+                    <Button text="Terapkan" styleClass="btn-primary" onAction="#handleFilter"/>
+                    <Button text="Reset"    styleClass="btn-secondary" onAction="#handleReset"/>
+                </HBox>
+
+                <TableView fx:id="tblBarang" VBox.vgrow="ALWAYS"
+                           onMouseClicked="#handlePilihBaris">
+                    <columns>
+                        <TableColumn fx:id="colKode"      text="Kode"        prefWidth="100"/>
+                        <TableColumn fx:id="colNama"      text="Nama Barang" prefWidth="220"/>
+                        <TableColumn fx:id="colHargaBeli" text="Harga Beli"  prefWidth="110"/>
+                        <TableColumn fx:id="colHargaJual" text="Harga Jual"  prefWidth="110"/>
+                        <TableColumn fx:id="colStok"      text="Stok"        prefWidth="70"/>
+                        <TableColumn fx:id="colKategori"  text="Kategori"    prefWidth="110"/>
+                        <TableColumn fx:id="colSupplier"  text="ID Supplier" prefWidth="110"/>
+                        <TableColumn fx:id="colAksi"      text="Aksi"        prefWidth="160"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Peringatan stok rendah -->
+            <Label fx:id="lblStokWarning" text="" styleClass="label-warning" wrapText="true"/>
+
+        </VBox>
+    </HBox>
+</VBox>
