@@ -15,10 +15,12 @@ com\countepiphany\model\LaporanKeuangan.class
 com\countepiphany\controller\RiwayatController.class
 com\countepiphany\MainApp.class
 com\countepiphany\controller\InventoriController$2.class
+com\countepiphany\controller\PdfPreviewController.class
 com\countepiphany\service\TransaksiService.class
 com\countepiphany\util\PasswordHasher.class
 com\countepiphany\dao\PembelianBarangDAO.class
 com\countepiphany\model\Barang.class
+com\countepiphany\controller\InventoriController$3.class
 com\countepiphany\controller\LoginController.class
 com\countepiphany\service\LaporanService.class
 com\countepiphany\service\PembelianService.class

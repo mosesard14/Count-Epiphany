@@ -19,6 +19,26 @@ public class BarangService {
      *
      * @throws IllegalArgumentException jika data tidak valid atau ID sudah ada
      */
+    /** Tambah barang dengan subkategori. */
+    public Barang tambahBarang(String idBarang, String namaBarang,
+                               double hargaBeli, double hargaJual,
+                               String kategori, String subkategori,
+                               String idSupplier, int stokMinimum) {
+        if (idBarang == null || idBarang.isBlank())
+            throw new IllegalArgumentException("Kode barang tidak boleh kosong.");
+        if (namaBarang == null || namaBarang.isBlank())
+            throw new IllegalArgumentException("Nama barang tidak boleh kosong.");
+        if (barangDAO.isIdExists(idBarang))
+            throw new IllegalArgumentException("Kode barang '" + idBarang + "' sudah digunakan.");
+
+        Barang b = new Barang(idBarang, namaBarang, hargaBeli, hargaJual,
+                              0, kategori, subkategori, idSupplier, stokMinimum);
+        if (!barangDAO.save(b))
+            throw new RuntimeException("Gagal menyimpan barang ke database.");
+        return b;
+    }
+
+    /** Tambah barang tanpa subkategori (backward compatible). */
     public Barang tambahBarang(String idBarang, String namaBarang,
                                 double hargaBeli, double hargaJual,
                                 String kategori, String idSupplier,
@@ -91,6 +111,11 @@ public class BarangService {
      * Mendapatkan daftar barang dengan stok di bawah minimum.
      * Digunakan untuk notifikasi peringatan stok rendah.
      */
+    /** Ambil semua subkategori unik dari satu kategori. Untuk panel kiri inventori. */
+    public List<String> getSubkategoriByKategori(String kategori) {
+        return barangDAO.findSubkategoriByKategori(kategori);
+    }
+
     public List<Barang> getBarangStokRendah() {
         return barangDAO.findStokRendah();
     }

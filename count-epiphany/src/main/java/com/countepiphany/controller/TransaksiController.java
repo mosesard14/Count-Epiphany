@@ -15,7 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
+import com.countepiphany.MainApp;
 import java.awt.Desktop;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -263,14 +269,23 @@ public class TransaksiController {
 
     private void cetakStrukOtomatis(Transaksi transaksi) {
         try {
-            String path = System.getProperty("java.io.tmpdir")
-                    + File.separator + "struk_" + transaksi.getIdTransaksi() + ".pdf";
-            strukService.cetakStruk(transaksi, path);
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(new File(path));
-            }
+            FXMLLoader loader = new FXMLLoader(
+                MainApp.class.getResource("/com/countepiphany/fxml/pdf_preview.fxml"));
+            Parent root = loader.load();
+            PdfPreviewController ctrl = loader.getController();
+
+            Stage previewStage = new Stage();
+            previewStage.setTitle("Struk Transaksi #" + transaksi.getIdTransaksi());
+            previewStage.setScene(new Scene(root));
+            previewStage.initOwner(MainApp.getPrimaryStage());
+            previewStage.initModality(Modality.NONE);
+            previewStage.setResizable(false);
+            previewStage.show();
+
+            // Panggil setelah show() agar UI sudah siap
+            ctrl.tampilkan(transaksi);
         } catch (IOException e) {
-            AlertUtil.showWarning("Struk", "Transaksi berhasil namun gagal mencetak struk: " + e.getMessage());
+            AlertUtil.showWarning("Struk", "Transaksi berhasil namun preview struk gagal: " + e.getMessage());
         }
     }
 
