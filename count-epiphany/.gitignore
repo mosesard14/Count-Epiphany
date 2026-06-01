@@ -1,0 +1,5 @@
+# IntelliJ IDEA
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqldialects.xml
+.idea/dataSources/
