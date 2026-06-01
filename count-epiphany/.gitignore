@@ -3,4 +3,8 @@
 .idea/dataSources.local.xml
 .idea/sqldialects.xml
 .idea/dataSources/
-target/
+.target/
+
+*.class
+
+*.lst
