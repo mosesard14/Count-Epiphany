@@ -102,6 +102,7 @@
                         <TableColumn fx:id="colHargaJual" text="Harga Jual"  prefWidth="110"/>
                         <TableColumn fx:id="colStok"      text="Stok"        prefWidth="70"/>
                         <TableColumn fx:id="colKategori"  text="Kategori"    prefWidth="110"/>
+                        <TableColumn fx:id="colSubkategori"  text="Subkategori" prefWidth="90"/>
                         <TableColumn fx:id="colSupplier"  text="ID Supplier" prefWidth="110"/>
                         <TableColumn fx:id="colAksi"      text="Aksi"        prefWidth="160"/>
                     </columns>

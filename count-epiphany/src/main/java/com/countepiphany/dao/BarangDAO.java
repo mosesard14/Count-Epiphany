@@ -90,6 +90,23 @@ public class BarangDAO {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Gagal mencari barang by id", e);
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Barang> findByNama(String namaBarang) {
+        String sql = "SELECT * FROM barang WHERE nama_barang = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, namaBarang.trim());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return Optional.of(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal mencari barang by nama", e);
+            e.printStackTrace();
         }
         return Optional.empty();
     }
@@ -244,10 +261,10 @@ public class BarangDAO {
                 rs.getDouble("harga_jual"),
                 rs.getInt   ("stok"),
                 rs.getString("kategori"),
+                rs.getString("subkategori"),
                 rs.getString("id_supplier"),
                 rs.getInt   ("stok_minimum")
         );
-        b.setSubkategori(rs.getString("subkategori"));
         return b;
     }
 }

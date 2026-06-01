@@ -45,6 +45,7 @@ public class InventoriController {
     // ── Filter ────────────────────────────────────────────
     @FXML private TextField           txtCariBarang;
     @FXML private ComboBox<String>    cmbFilterStok;
+    @FXML private ComboBox<String> cmbFilterKategori; // tambahkan ini
 
     // ── Panel subkategori (kiri) ──────────────────────────
     @FXML private VBox                panelSubkategori;
@@ -223,8 +224,12 @@ public class InventoriController {
         List<String> ids = supplierService.getAllSupplier().stream()
             .map(s -> s.getIdSupplier() + " - " + s.getNamaSupplier())
             .collect(Collectors.toList());
+        cmbFilterKategori.setItems(FXCollections.observableArrayList(
+                "Semua", "Makanan", "Minuman", "Snack", "Sembako", "Kebersihan", "Lainnya"
+        ));
+        cmbFilterKategori.setValue("Semua");
         cmbSupplier.setItems(FXCollections.observableArrayList(ids));
-        cmbFilterStok.setItems(FXCollections.observableArrayList("Semua", "Habis", "Rendah"));
+        cmbFilterStok.setItems(FXCollections.observableArrayList("Semua", "Makanan", "Minuman", "Snack", "Sembako", "Kebersihan", "Lainnya"));
         cmbFilterStok.setValue("Semua");
     }
 

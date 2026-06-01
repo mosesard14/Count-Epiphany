@@ -36,23 +36,24 @@ public class TransaksiService {
     /**
      * Menambah barang ke keranjang berdasarkan kode/nama barang.
      *
-     * @param idBarang kode barang
+     * @param namaBarang kode barang
      * @param jumlah   kuantitas yang akan ditambahkan
      * @throws IllegalArgumentException jika barang tidak ditemukan atau stok tidak cukup
      */
-    public DetailTransaksi tambahItemKeKeranjang(String idBarang, int jumlah) {
-        if (idBarang == null || idBarang.isBlank())
+    public DetailTransaksi tambahItemKeKeranjang(String namaBarang, int jumlah) {
+        if (namaBarang == null || namaBarang.isBlank())
             throw new IllegalArgumentException("Kode barang tidak boleh kosong.");
         if (jumlah <= 0)
             throw new IllegalArgumentException("Jumlah harus lebih dari 0.");
 
-        Optional<Barang> opt = barangDAO.findById(idBarang.trim());
+        Optional<Barang> opt = barangDAO.findByNama(namaBarang.trim());
         if (opt.isEmpty())
-            throw new IllegalArgumentException("Barang dengan kode '" + idBarang + "' tidak ditemukan.");
+            throw new IllegalArgumentException("Barang '" + namaBarang + "' tidak ditemukan.");
 
         Barang barang = opt.get();
 
         // Cek stok — termasuk sudah ada di keranjang
+        String idBarang = barang.getIdBarang();
         int sudahDiKeranjang = transaksiAktif.getDetailList().stream()
                 .filter(d -> d.getIdBarang().equals(idBarang))
                 .mapToInt(DetailTransaksi::getJumlah)

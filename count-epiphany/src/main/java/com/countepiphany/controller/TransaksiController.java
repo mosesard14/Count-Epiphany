@@ -8,6 +8,9 @@ import com.countepiphany.service.StrukService;
 import com.countepiphany.service.TransaksiService;
 import com.countepiphany.util.AlertUtil;
 import com.countepiphany.util.CurrencyUtil;
+import com.countepiphany.service.BarangService;
+import javafx.scene.control.ComboBox;
+import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,8 +35,7 @@ import java.util.List;
 public class TransaksiController {
 
     // ── Header inputs
-    @FXML private TextField   txtKodeBarang;
-    @FXML private TextField   txtNamaBarangCari;
+    @FXML private ComboBox<String> cmbNamaBarang;
     @FXML private TextField   txtJumlah;
 
     // ── Total display
@@ -64,6 +66,7 @@ public class TransaksiController {
     private final TransaksiService transaksiService = new TransaksiService();
     private final AuthService      authService      = new AuthService();
     private final StrukService     strukService     = new StrukService();
+    private final BarangService barangService = new BarangService();
 
     private final ObservableList<DetailTransaksi> keranjangList = FXCollections.observableArrayList();
 
@@ -71,12 +74,40 @@ public class TransaksiController {
     public void initialize() {
         transaksiService.mulaiTransaksiBaru();
         setupTable();
+        setupAutocomplete();
         tblKeranjang.setItems(keranjangList);
-
-        // Sinkronisasi pencarian: kode atau nama
-        txtKodeBarang.setOnAction(e -> handleTambahBarang());
-        txtNamaBarangCari.setOnAction(e -> handleTambahBarang());
         txtJumlah.setOnAction(e -> handleTambahBarang());
+    }
+
+    private void setupAutocomplete() {
+        List<String> daftarNama = barangService.getAllBarang().stream()
+                .map(b -> b.getNamaBarang())
+                .sorted()
+                .collect(Collectors.toList());
+
+        cmbNamaBarang.setItems(FXCollections.observableArrayList(daftarNama));
+
+        // Filter saat mengetik
+        cmbNamaBarang.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null || newVal.isBlank()) {
+                cmbNamaBarang.setItems(FXCollections.observableArrayList(daftarNama));
+                return;
+            }
+            String keyword = newVal.toLowerCase();
+            List<String> filtered = daftarNama.stream()
+                    .filter(nama -> nama.toLowerCase().contains(keyword))
+                    .collect(Collectors.toList());
+            cmbNamaBarang.setItems(FXCollections.observableArrayList(filtered));
+            cmbNamaBarang.show(); // buka dropdown otomatis
+        });
+
+        cmbNamaBarang.setOnAction(e -> {
+            if (cmbNamaBarang.getValue() != null) {
+                cmbNamaBarang.getEditor().setText(cmbNamaBarang.getValue());
+                txtJumlah.requestFocus();
+                txtJumlah.selectAll();
+            }
+        });
     }
 
     // ── Table Setup ───────────────────────────────────────
@@ -127,13 +158,11 @@ public class TransaksiController {
 
     @FXML
     private void handleTambahBarang() {
-        String kode   = txtKodeBarang.getText().trim();
-        String nama   = txtNamaBarangCari.getText().trim();
+        String nama   = cmbNamaBarang.getEditor().getText().trim();
         String jmlStr = txtJumlah.getText().trim();
 
-        String idBarang = kode.isEmpty() ? nama : kode;
-        if (idBarang.isEmpty()) {
-            AlertUtil.showWarning("Input Kosong", "Masukkan kode atau nama barang.");
+        if (nama.isEmpty()) {
+            AlertUtil.showWarning("Input Kosong", "Pilih atau ketik nama barang.");
             return;
         }
 
@@ -148,17 +177,16 @@ public class TransaksiController {
         }
 
         try {
-            DetailTransaksi item = transaksiService.tambahItemKeKeranjang(idBarang, jumlah);
-            // Jika item sudah ada, update di list; jika baru, tambahkan
+            DetailTransaksi item = transaksiService.tambahItemKeKeranjang(nama, jumlah);
             if (!keranjangList.contains(item)) {
                 keranjangList.add(item);
             }
             tblKeranjang.refresh();
             refreshTotal();
-            txtKodeBarang.clear();
-            txtNamaBarangCari.clear();
+            cmbNamaBarang.getEditor().clear();
+            cmbNamaBarang.setValue(null);
             txtJumlah.clear();
-            txtKodeBarang.requestFocus();
+            cmbNamaBarang.requestFocus();
         } catch (IllegalArgumentException ex) {
             AlertUtil.showWarning("Gagal Menambah", ex.getMessage());
         }
@@ -323,8 +351,8 @@ public class TransaksiController {
         lblKembalian.setText("Rp 0,00");
         txtDiskon.clear();
         txtNominalBayar.clear();
-        txtKodeBarang.clear();
-        txtNamaBarangCari.clear();
+        cmbNamaBarang.getEditor().clear();
+        cmbNamaBarang.setValue(null);
         txtJumlah.clear();
         toggleCashless.setSelected(false);
         toggleCashless.setText("OFF");
