@@ -4,7 +4,11 @@
 .idea/sqldialects.xml
 .idea/dataSources/
 .target/
-
 *.class
-
 *.lst
+database.properties
+.idea/
+*.iml
+.classpath
+.project
+.settings/
