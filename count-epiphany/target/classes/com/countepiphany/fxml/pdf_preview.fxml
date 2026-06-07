@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.countepiphany.controller.PdfPreviewController"
+      prefWidth="460" prefHeight="640"
+      style="-fx-background-color:#F5F4FB;">
+
+    <!-- Header -->
+    <HBox styleClass="header-bar" alignment="CENTER_LEFT">
+        <VBox>
+            <Label text="Count"   styleClass="header-title" style="-fx-font-style:italic;"/>
+            <Label text="Epiphany" styleClass="header-title"
+                   style="-fx-font-style:italic;-fx-font-size:18px;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Struk Transaksi" styleClass="header-tagline"/>
+    </HBox>
+
+    <!-- Toolbar -->
+    <HBox spacing="10" alignment="CENTER_LEFT"
+          style="-fx-padding:10 16 10 16;-fx-background-color:#FFFFFF;
+                 -fx-border-color:#E0E0E0;-fx-border-width:0 0 1 0;">
+        <Button fx:id="btnCetak"  text="Buka PDF"   styleClass="btn-success"   onAction="#handleCetak"/>
+        <Button fx:id="btnSimpan" text="Simpan PDF"  styleClass="btn-primary"   onAction="#handleSimpan"/>
+        <Button fx:id="btnTutup"  text="Tutup"       styleClass="btn-secondary" onAction="#handleTutup"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblNamaFile" text="" styleClass="label-muted" style="-fx-font-size:11px;"/>
+    </HBox>
+
+    <!-- Area preview struk (render teks terformat seperti struk thermal) -->
+    <ScrollPane fx:id="scrollPreview" VBox.vgrow="ALWAYS"
+                fitToWidth="true"
+                style="-fx-background-color:#E8E6F8;-fx-padding:16;">
+        <VBox fx:id="vboxStruk" alignment="TOP_CENTER"
+              style="-fx-padding:20;">
+            <Label fx:id="lblLoading" text="Memuat struk..."
+                   style="-fx-font-size:13px;-fx-text-fill:#9E9E9E;-fx-padding:40 0 0 0;"/>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Status bar -->
+    <HBox style="-fx-padding:6 16 6 16;-fx-background-color:#FFFFFF;
+                 -fx-border-color:#E0E0E0;-fx-border-width:1 0 0 0;"
+          alignment="CENTER_LEFT" spacing="10">
+        <Label fx:id="lblStatus" text="Siap."
+               styleClass="label-muted" style="-fx-font-size:11px;"/>
+    </HBox>
+
+</VBox>
