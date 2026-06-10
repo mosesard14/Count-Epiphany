@@ -18,6 +18,8 @@
         <Label text="Manajemen Inventori" styleClass="header-tagline"/>
     </HBox>
 
+    <ScrollPane fitToWidth="true" fitToHeight="false" pannable="true" VBox.vgrow="ALWAYS">
+        <content>
     <HBox VBox.vgrow="ALWAYS">
 
         <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
@@ -33,19 +35,15 @@
 
         <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
 
-            <!-- Form Tambah / Update Barang -->
-            <VBox styleClass="card" spacing="10">
+            <!-- Form Update Barang -->
+            <VBox fx:id="boxUpdateBarang" styleClass="card" spacing="10">
                 <HBox alignment="CENTER_LEFT" spacing="8">
-                    <Label fx:id="lblFormTitle" text="Tambah Barang Baru" styleClass="label-section"/>
+                    <Label fx:id="lblFormTitle" text="Update Barang" styleClass="label-section"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button text="Hapus" styleClass="btn-icon" onAction="#handleHapus" fx:id="btnHapus"/>
+
                 </HBox>
 
                 <HBox spacing="10" alignment="CENTER_LEFT">
-                    <VBox spacing="3">
-                        <Label text="Kode Barang" styleClass="label-muted"/>
-                        <TextField fx:id="txtIdBarang" promptText="Kode/Barcode" prefWidth="120"/>
-                    </VBox>
                     <VBox spacing="3">
                         <Label text="Nama Barang" styleClass="label-muted"/>
                         <TextField fx:id="txtNamaBarang" promptText="Nama barang" prefWidth="200"/>
@@ -63,15 +61,11 @@
                         <TextField fx:id="txtKategori" promptText="Kategori" prefWidth="120"/>
                     </VBox>
                     <VBox spacing="3">
-                        <Label text="ID Supplier" styleClass="label-muted"/>
-                        <ComboBox fx:id="cmbSupplier" promptText="Pilih supplier" prefWidth="140"/>
-                    </VBox>
-                    <VBox spacing="3">
                         <Label text="Stok Min." styleClass="label-muted"/>
                         <TextField fx:id="txtStokMin" promptText="5" prefWidth="70"/>
                     </VBox>
                     <VBox alignment="BOTTOM_LEFT" spacing="4">
-                        <Button text="Simpan" styleClass="btn-success" onAction="#handleSimpan"/>
+                        <Button text="Update" styleClass="btn-success" onAction="#handleSimpan"/>
                         <Button text="Batal"  styleClass="btn-secondary" onAction="#handleBatalForm"/>
                     </VBox>
                 </HBox>
@@ -93,8 +87,7 @@
                     <Button text="Reset"    styleClass="btn-secondary" onAction="#handleReset"/>
                 </HBox>
 
-                <TableView fx:id="tblBarang" VBox.vgrow="ALWAYS"
-                           onMouseClicked="#handlePilihBaris">
+                <TableView fx:id="tblBarang" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colKode"      text="Kode"        prefWidth="100"/>
                         <TableColumn fx:id="colNama"      text="Nama Barang" prefWidth="220"/>
@@ -114,4 +107,6 @@
 
         </VBox>
     </HBox>
+        </content>
+    </ScrollPane>
 </VBox>

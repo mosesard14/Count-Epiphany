@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class InventoriController {
 
     // ── Form fields ───────────────────────────────────────
+    @FXML private VBox             boxUpdateBarang;
     @FXML private Label            lblFormTitle;
     @FXML private Button           btnHapus;
     @FXML private TextField        txtIdBarang;
@@ -55,6 +56,10 @@ public class InventoriController {
     private final AuthService     authService     = new AuthService();
 
     private boolean isEditMode = false;
+    private String editingIdBarang;
+    private String editingIdSupplier;
+    private String editingSubkategori;
+    private int editingStok;
 
     // ── Init ──────────────────────────────────────────────
 
@@ -63,6 +68,8 @@ public class InventoriController {
         setupTabelUtama();
         tblBarang.setItems(listSemua);
         setupComboBoxes();
+        boxUpdateBarang.setVisible(false);
+        boxUpdateBarang.setManaged(false);
         muatSemuaBarang();
         cekStokRendah();
     }
@@ -123,11 +130,6 @@ public class InventoriController {
     }
 
     private void setupComboBoxes() {
-        List<String> suppliers = supplierService.getAllSupplier().stream()
-                .map(s -> s.getIdSupplier() + " - " + s.getNamaSupplier())
-                .collect(Collectors.toList());
-        cmbSupplier.setItems(FXCollections.observableArrayList(suppliers));
-
         cmbFilterKategori.setItems(FXCollections.observableArrayList(
                 "Semua", "Makanan", "Minuman", "Snack", "Sembako", "Kebersihan", "Lainnya"));
         cmbFilterKategori.setValue("Semua");
@@ -141,27 +143,21 @@ public class InventoriController {
     @FXML
     private void handleSimpan() {
         try {
-            String idBarang   = txtIdBarang.getText().trim();
+            if (!isEditMode || editingIdBarang == null) {
+                throw new IllegalStateException("Pilih barang melalui tombol Edit terlebih dahulu.");
+            }
+
             String namaBarang = txtNamaBarang.getText().trim();
             double hargaBeli  = Double.parseDouble(txtHargaBeli.getText().trim().replace(",", "."));
             double hargaJual  = Double.parseDouble(txtHargaJual.getText().trim().replace(",", "."));
             String kategori   = txtKategori.getText().trim();
             int stokMin       = txtStokMin.getText().trim().isEmpty() ? 5
                     : Integer.parseInt(txtStokMin.getText().trim());
-            String idSupplier = null;
-            if (cmbSupplier.getValue() != null)
-                idSupplier = cmbSupplier.getValue().split(" - ")[0];
 
-            if (isEditMode) {
-                Barang b = new Barang(idBarang, namaBarang, hargaBeli, hargaJual,
-                        0, kategori, idSupplier, stokMin);
-                barangService.updateBarang(b);
-                AlertUtil.showInfo("Berhasil", "Data barang berhasil diperbarui.");
-            } else {
-                barangService.tambahBarang(idBarang, namaBarang, hargaBeli, hargaJual,
-                        kategori, null, idSupplier, stokMin);
-                AlertUtil.showInfo("Berhasil", "Barang '" + namaBarang + "' berhasil ditambahkan.");
-            }
+            Barang b = new Barang(editingIdBarang, namaBarang, hargaBeli, hargaJual,
+                    editingStok, kategori, editingSubkategori, editingIdSupplier, stokMin);
+            barangService.updateBarang(b);
+            AlertUtil.showInfo("Berhasil", "Data barang berhasil diperbarui.");
             handleBatalForm();
             muatSemuaBarang();
             cekStokRendah();
@@ -177,7 +173,7 @@ public class InventoriController {
 
     @FXML
     private void handleHapus() {
-        String id = txtIdBarang.getText().trim();
+        String id = editingIdBarang != null ? editingIdBarang : "";
         if (id.isEmpty()) return;
         if (AlertUtil.showConfirmation("Hapus Barang", "Yakin hapus barang '" + id + "'?")) {
             try {
@@ -205,16 +201,18 @@ public class InventoriController {
     @FXML
     private void handleBatalForm() {
         isEditMode = false;
-        lblFormTitle.setText("Tambah Barang Baru");
-        btnHapus.setVisible(false);
-        txtIdBarang.clear();
-        txtIdBarang.setEditable(true);
+        editingIdBarang = null;
+        editingIdSupplier = null;
+        editingSubkategori = null;
+        editingStok = 0;
+        lblFormTitle.setText("Update Barang");
+        boxUpdateBarang.setVisible(false);
+        boxUpdateBarang.setManaged(false);
         txtNamaBarang.clear();
         txtHargaBeli.clear();
         txtHargaJual.clear();
         txtKategori.clear();
         txtStokMin.clear();
-        cmbSupplier.setValue(null);
     }
 
     // ── Filter & search ───────────────────────────────────
@@ -241,8 +239,6 @@ public class InventoriController {
 
     @FXML
     private void handlePilihBaris() {
-        Barang sel = tblBarang.getSelectionModel().getSelectedItem();
-        if (sel != null) isiFormUntukEdit(sel);
     }
 
     // ── Helpers ───────────────────────────────────────────
@@ -250,19 +246,17 @@ public class InventoriController {
     private void isiFormUntukEdit(Barang b) {
         isEditMode = true;
         lblFormTitle.setText("Update Barang");
-        btnHapus.setVisible(true);
-        txtIdBarang.setText(b.getIdBarang());
-        txtIdBarang.setEditable(false);
+        editingIdBarang = b.getIdBarang();
+        editingIdSupplier = b.getIdSupplier();
+        editingSubkategori = b.getSubkategori();
+        editingStok = b.getStok();
+        boxUpdateBarang.setVisible(true);
+        boxUpdateBarang.setManaged(true);
         txtNamaBarang.setText(b.getNamaBarang());
         txtHargaBeli.setText(String.valueOf(b.getHargaBeli()));
         txtHargaJual.setText(String.valueOf(b.getHargaJual()));
         txtKategori.setText(nvl(b.getKategori()));
         txtStokMin.setText(String.valueOf(b.getStokMinimum()));
-        if (b.getIdSupplier() != null) {
-            cmbSupplier.getItems().stream()
-                    .filter(s -> s.startsWith(b.getIdSupplier()))
-                    .findFirst().ifPresent(cmbSupplier::setValue);
-        }
     }
 
     private void muatSemuaBarang() {

@@ -33,6 +33,45 @@
 
         <VBox HBox.hgrow="ALWAYS" spacing="12" style="-fx-padding:16;">
 
+            <!-- Form Tambah Barang Baru -->
+            <VBox styleClass="card" spacing="10">
+                <Label text="Tambah Barang Baru" styleClass="label-section"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="3">
+                        <Label text="Kode Barang" styleClass="label-muted"/>
+                        <TextField fx:id="txtIdBarangBaru" promptText="Kode/Barcode" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Nama Barang" styleClass="label-muted"/>
+                        <TextField fx:id="txtNamaBarangBaru" promptText="Nama barang" prefWidth="200"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Harga Beli" styleClass="label-muted"/>
+                        <TextField fx:id="txtHargaBeliBaru" promptText="0" prefWidth="110"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Harga Jual" styleClass="label-muted"/>
+                        <TextField fx:id="txtHargaJualBaru" promptText="0" prefWidth="110"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Kategori" styleClass="label-muted"/>
+                        <TextField fx:id="txtKategoriBaru" promptText="Kategori" prefWidth="120"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="ID Supplier" styleClass="label-muted"/>
+                        <ComboBox fx:id="cmbSupplierBaru" promptText="Pilih supplier" prefWidth="140"/>
+                    </VBox>
+                    <VBox spacing="3">
+                        <Label text="Stok Min." styleClass="label-muted"/>
+                        <TextField fx:id="txtStokMinBaru" promptText="5" prefWidth="70"/>
+                    </VBox>
+                    <VBox alignment="BOTTOM_LEFT" spacing="4">
+                        <Button text="Simpan Barang" styleClass="btn-success" onAction="#handleSimpanBarangBaru"/>
+                        <Button text="Batal" styleClass="btn-secondary" onAction="#handleBatalBarangBaru"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
             <!-- Form Tambah Pembelian -->
             <VBox styleClass="card" spacing="10">
                 <Label text="Catat Pembelian Barang (Restock)" styleClass="label-section"/>

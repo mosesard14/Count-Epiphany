@@ -29,7 +29,7 @@
     <HBox VBox.vgrow="ALWAYS">
 
         <VBox alignment="TOP_CENTER" spacing="6" styleClass="sidebar">
-            <Button onAction="#gotoTransaksi" styleClass="nav-button" text="Transaksi" />
+            <Button onAction="#gotoTransaksi" styleClass="nav-button,active" text="Transaksi" />
             <Button onAction="#gotoInventori" styleClass="nav-button" text="Inventori" />
             <Button onAction="#gotoSupplier" styleClass="nav-button" text="Supplier" />
             <Button onAction="#gotoLaporan" styleClass="nav-button" text="Laporan" />
@@ -51,7 +51,7 @@
                         </VBox>
                         <VBox spacing="2">
                             <Label styleClass="label-muted" text="Jumlah" />
-                            <TextField fx:id="txtJumlah" prefHeight="42.0" prefWidth="70" promptText="1" />
+                            <TextField fx:id="txtJumlah" prefHeight="42.0" prefWidth="70" promptText="0" />
                         </VBox>
                         <VBox alignment="BOTTOM_LEFT">
                             <Button onAction="#handleTambahBarang" styleClass="btn-add-icon" text="+">

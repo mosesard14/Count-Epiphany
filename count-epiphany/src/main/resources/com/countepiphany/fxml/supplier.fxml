@@ -18,6 +18,8 @@
         <Label text="Manajemen Supplier" styleClass="header-tagline"/>
     </HBox>
 
+    <ScrollPane fitToWidth="true" fitToHeight="false" pannable="true" VBox.vgrow="ALWAYS">
+        <content>
     <HBox VBox.vgrow="ALWAYS">
 
         <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
@@ -38,8 +40,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="8">
                     <Label fx:id="lblFormTitle" text="Tambah Supplier" styleClass="label-section"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="btnHapus" text="Hapus" styleClass="btn-icon"
-                            onAction="#handleHapus" visible="false"/>
+
                 </HBox>
 
                 <HBox spacing="10" alignment="CENTER_LEFT">
@@ -95,4 +96,6 @@
 
         </VBox>
     </HBox>
+        </content>
+    </ScrollPane>
 </VBox>

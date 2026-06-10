@@ -18,6 +18,8 @@
         <Label text="Riwayat Penjualan" styleClass="header-tagline"/>
     </HBox>
 
+    <ScrollPane fitToWidth="true" fitToHeight="false" pannable="true" VBox.vgrow="ALWAYS">
+        <content>
     <HBox VBox.vgrow="ALWAYS">
 
         <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
@@ -113,4 +115,6 @@
             </StackPane>
         </VBox>
     </HBox>
+        </content>
+    </ScrollPane>
 </VBox>

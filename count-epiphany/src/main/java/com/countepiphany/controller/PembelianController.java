@@ -26,6 +26,14 @@ import java.util.stream.Collectors;
  */
 public class PembelianController {
 
+    @FXML private TextField        txtIdBarangBaru;
+    @FXML private TextField        txtNamaBarangBaru;
+    @FXML private TextField        txtHargaBeliBaru;
+    @FXML private TextField        txtHargaJualBaru;
+    @FXML private TextField        txtKategoriBaru;
+    @FXML private ComboBox<String> cmbSupplierBaru;
+    @FXML private TextField        txtStokMinBaru;
+
     @FXML private ComboBox<String> cmbSupplier;
     @FXML private ComboBox<String> cmbBarang;
     @FXML private TextField        txtJumlahBeli;
@@ -94,13 +102,18 @@ public class PembelianController {
 
     private void setupComboBoxes() {
         allSuppliers = supplierService.getAllSupplier();
-        allBarang    = barangService.getAllBarang();
 
         List<String> supplierDisplay = allSuppliers.stream()
                 .map(s -> s.getIdSupplier() + " - " + s.getNamaSupplier())
                 .collect(Collectors.toList());
         cmbSupplier.setItems(FXCollections.observableArrayList(supplierDisplay));
+        cmbSupplierBaru.setItems(FXCollections.observableArrayList(supplierDisplay));
 
+        refreshBarangOptions();
+    }
+
+    private void refreshBarangOptions() {
+        allBarang = barangService.getAllBarang();
         List<String> barangDisplay = allBarang.stream()
                 .map(b -> b.getIdBarang() + " - " + b.getNamaBarang()
                         + " (Stok: " + b.getStok() + ")")
@@ -125,6 +138,47 @@ public class PembelianController {
     }
 
     @FXML
+    private void handleSimpanBarangBaru() {
+        try {
+            if (cmbSupplierBaru.getValue() == null)
+                throw new IllegalArgumentException("Pilih supplier terlebih dahulu.");
+
+            String idBarang   = txtIdBarangBaru.getText().trim();
+            String namaBarang = txtNamaBarangBaru.getText().trim();
+            double hargaBeli  = Double.parseDouble(txtHargaBeliBaru.getText().trim().replace(",", "."));
+            double hargaJual  = Double.parseDouble(txtHargaJualBaru.getText().trim().replace(",", "."));
+            String kategori   = txtKategoriBaru.getText().trim();
+            int stokMin       = txtStokMinBaru.getText().trim().isEmpty() ? 5
+                    : Integer.parseInt(txtStokMinBaru.getText().trim());
+            String idSupplier = cmbSupplierBaru.getValue().split(" - ")[0];
+
+            barangService.tambahBarang(idBarang, namaBarang, hargaBeli, hargaJual,
+                    kategori, null, idSupplier, stokMin);
+            AlertUtil.showInfo("Berhasil", "Barang '" + namaBarang + "' berhasil ditambahkan.");
+            handleBatalBarangBaru();
+            refreshBarangOptions();
+
+        } catch (NumberFormatException e) {
+            AlertUtil.showWarning("Input Salah", "Harga dan stok minimum harus berupa angka.");
+        } catch (IllegalArgumentException e) {
+            AlertUtil.showWarning("Validasi Gagal", e.getMessage());
+        } catch (Exception e) {
+            AlertUtil.showError("Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleBatalBarangBaru() {
+        txtIdBarangBaru.clear();
+        txtNamaBarangBaru.clear();
+        txtHargaBeliBaru.clear();
+        txtHargaJualBaru.clear();
+        txtKategoriBaru.clear();
+        txtStokMinBaru.clear();
+        cmbSupplierBaru.setValue(null);
+    }
+
+    @FXML
     private void handleSimpanPembelian() {
         try {
             if (cmbSupplier.getValue() == null)
@@ -142,6 +196,7 @@ public class PembelianController {
                     "Pembelian berhasil dicatat.\nStok barang telah bertambah " + jumlah + " unit.");
             handleBatal();
             muatSemuaPembelian();
+            refreshBarangOptions();
 
         } catch (NumberFormatException e) {
             AlertUtil.showWarning("Input Salah", "Jumlah dan harga harus berupa angka valid.");

@@ -18,6 +18,8 @@
         <Label text="Laporan" styleClass="header-tagline"/>
     </HBox>
 
+    <ScrollPane fitToWidth="true" fitToHeight="false" pannable="true" VBox.vgrow="ALWAYS">
+        <content>
     <HBox VBox.vgrow="ALWAYS">
 
         <VBox styleClass="sidebar" spacing="6" alignment="TOP_CENTER">
@@ -93,4 +95,6 @@
 
         </VBox>
     </HBox>
+        </content>
+    </ScrollPane>
 </VBox>

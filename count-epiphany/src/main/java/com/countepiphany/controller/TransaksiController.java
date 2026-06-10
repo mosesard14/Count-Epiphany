@@ -65,7 +65,7 @@ public class TransaksiController {
 
     private final TransaksiService transaksiService = new TransaksiService();
     private final AuthService      authService      = new AuthService();
-    private final StrukService     strukService     = new StrukService();
+//    private final StrukService     strukService     = new StrukService();
     private final BarangService barangService = new BarangService();
 
     private final ObservableList<DetailTransaksi> keranjangList = FXCollections.observableArrayList();
@@ -180,6 +180,7 @@ public class TransaksiController {
             DetailTransaksi item = transaksiService.tambahItemKeKeranjang(nama, jumlah);
             if (!keranjangList.contains(item)) {
                 keranjangList.add(item);
+
             }
             tblKeranjang.refresh();
             refreshTotal();
